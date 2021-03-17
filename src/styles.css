@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script|Libre+Baskerville');
+
+
+* {
+    padding: 0px;
+    margin: 0;
+    outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+    app-root {
+        grid-template-rows: unset;
+        grid-template-areas: 
+            "h h h h h h h h h h h h"
+            "n n n n n n n n n n n n"
+            "c c c c c c c c c c c c"
+            "f f f f f f f f f f f f";
+    }
+}
+
+app-root {
+    display: flex;
+    margin: 0;
+    height: 100%;
+    background-image: url("assets/images/background.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto auto 3em;
+    grid-template-areas: 
+        "h h h h h h h h h h h h"
+        "n n n n n n n n n n n n"
+        "c c c c c c c c c c c c"
+        "f f f f f f f f f f f f";
+}
+
+

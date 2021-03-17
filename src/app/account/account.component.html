@@ -1,0 +1,20 @@
+<section>
+    <form action="/account" method="post" enctype="multipart/form-data">
+        <label>Логин</label><br>
+        <input class="input" type="text" name="login" [(ngModel)]="account._login" #login="ngModel" required/><br>
+        <div [hidden]="login.valid || login.untouched" class="alert alert-danger">
+            Не указано имя
+        </div>
+        <label>Пароль</label><br>
+        <input class="input" type="password" name="password" [(ngModel)]="account._password" #password="ngModel" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"/><br>
+        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+            Не указан пароль
+        </div>
+        <input class="button" type="submit" (click)="addAccount()" value="Добавить" />
+        <div ><p>Добавленные элементы</p>
+            <ul *ngFor="let a of accounts">
+                <li><p>{{a._login}} ({{a._password}})</p></li>
+            </ul>
+        </div>`
+    </form>
+</section>
