@@ -1,0 +1,28 @@
+.btn-primary {
+    background-color:aliceblue;
+    color: black;
+}
+
+#bold {
+    font-weight: bold;
+}
+
+#italic {
+    font-style: italic;
+}
+
+#underline {
+    text-decoration: underline;
+}
+
+#picture {
+    background-image: url("../../assets/images/pic.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#link {
+    background-image: url("../../assets/images/link.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}

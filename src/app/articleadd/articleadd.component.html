@@ -2,8 +2,26 @@
     <form action="/article/add" method="post">
         <label>Название статьи</label><br />
         <input class="input" type="text" name="articlename"/><br /><br />
-        <label>Текст статьи</label><br />
-        <textarea class="input" cols="60" rows="45" name="articledata"></textarea><br><br>
+        <label>Содержимое статьи</label><br />
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" id="bold" (click)="makeBold()">Ж</button>
+            <button type="button" class="btn btn-primary" id="italic">К</button>
+            <button type="button" class="btn btn-primary" id="underline">Ч</button>
+            <button type="button" class="btn btn-primary" id="link"> </button>
+            <button type="button" class="btn btn-primary" id="picture"> </button>
+            <br>
+            <br>
+            <button type="button" class="btn btn-primary" (click)="showCode()">Код</button>
+            <button type="button" class="btn btn-primary" (click)="showView()">Вид</button>
+        </div><br />
+        <div [hidden]="!isCode">
+            <textarea class="input" cols="60" rows="45" [(ngModel)]="articleText" id="articletext" name="articledata"></textarea><br /><br />
+        </div>
+        <div [hidden]="isCode">
+            <p>
+                {{articleText}}
+            </p>
+        </div>
         <input class="button" type="submit" value="Добавить статью" />
     </form>    
 </section>

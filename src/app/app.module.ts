@@ -15,6 +15,7 @@ import { PhotoComponent } from './photo/photo.component';
 import { PhotoAddComponent } from './photoadd/photoadd.component';
 import { ArticleComponent } from './article/article.component';
 import { ArticleAddComponent } from './articleadd/articleadd.component';
+import { ArticleListComponent } from './articlelist/articlelist.component';
 import { NotFoundComponent } from './notfound/notfound.component';
 
 
@@ -23,7 +24,8 @@ const photoRoutes: Routes = [
 ];
 
 const articleRoutes: Routes = [
-  { path: 'add', component: ArticleAddComponent}
+  { path: 'add', component: ArticleAddComponent},
+  { path: '', component: ArticleListComponent}
 ];
 
 const appRoutes: Routes =[
