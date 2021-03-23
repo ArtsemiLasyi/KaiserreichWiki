@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { HttpClientModule }   from '@angular/common/http';
 
 import {Routes, RouterModule} from '@angular/router';
 
@@ -13,6 +14,7 @@ import { GreetingComponent } from './greeting/greeting.component';
 import { AccountComponent } from './account/account.component';
 import { PhotoComponent } from './photo/photo.component';
 import { PhotoAddComponent } from './photoadd/photoadd.component';
+import { AdminComponent } from './admin/admin.component';
 import { ArticleComponent } from './article/article.component';
 import { ArticleAddComponent } from './articleadd/articleadd.component';
 import { ArticleListComponent } from './articlelist/articlelist.component';
@@ -33,6 +35,7 @@ const appRoutes: Routes =[
   { path: 'account', component : AccountComponent },
   { path: 'article', component : ArticleComponent, children: articleRoutes },
   { path: 'photo', component: PhotoComponent, children: photoRoutes },
+  { path: 'admin', component: AdminComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -47,13 +50,15 @@ const appRoutes: Routes =[
     ArticleComponent,
     ArticleAddComponent,
     PhotoComponent,
-    PhotoAddComponent
+    PhotoAddComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

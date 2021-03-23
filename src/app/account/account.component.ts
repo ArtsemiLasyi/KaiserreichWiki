@@ -1,19 +1,22 @@
 import { Component, Input } from '@angular/core';
-import { Account } from '../data/data.service';
+import { Account, HttpService } from '../data/data.service';
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
-    styleUrls: ['./account.component.css', '../app.component.css']
+    styleUrls: ['./account.component.css', '../app.component.css'],
+    providers: [HttpService]
 })
 export class AccountComponent {
     
-    account: Account = new Account("", "");
-     
-    accounts: Account[] = [];
+    account: Account = new Account("", "", "");
 
-    addAccount(){
-        this.accounts.push(new Account(this.account._login, this.account._password));
-    }
+    done: boolean = false;
 
+
+    constructor(private httpService: HttpService){}
+    submit(){
+        alert("a");
+        this.httpService.postData("/account", this.account);
+    };
 }

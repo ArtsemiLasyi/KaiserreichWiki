@@ -1,20 +1,20 @@
 <section>
-    <form action="/account" method="post" enctype="multipart/form-data">
+    <form action="/account" #accountForm="ngForm" method="post">
+        <label>Email</label><br>
+        <input class="input" type="email" name="email" [(ngModel)]="account._email" #email="ngModel" required  pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"/><br>
+        <div [hidden]="!(email.invalid && (email.dirty || email.touched))" class="alert alert-danger">
+            Не указан email
+        </div>
         <label>Логин</label><br>
         <input class="input" type="text" name="login" [(ngModel)]="account._login" #login="ngModel" required/><br>
-        <div [hidden]="login.valid || login.untouched" class="alert alert-danger">
+        <div [hidden]="!(login.invalid && (login.dirty || login.touched))" class="alert alert-danger">
             Не указано имя
         </div>
         <label>Пароль</label><br>
-        <input class="input" type="password" name="password" [(ngModel)]="account._password" #password="ngModel" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"/><br>
-        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+        <input class="input" type="password" name="password" [(ngModel)]="account._password" minlength="8" #password="ngModel" required/><br>
+        <div [hidden]="!(password.invalid && (password.dirty || password.touched))" class="alert alert-danger">
             Не указан пароль
         </div>
-        <input class="button" type="submit" (click)="addAccount()" value="Добавить" />
-        <div ><p>Добавленные элементы</p>
-            <ul *ngFor="let a of accounts">
-                <li><p>{{a._login}} ({{a._password}})</p></li>
-            </ul>
-        </div>`
+        <input class="button" type="submit" [disabled]="accountForm.invalid" (click)="submit()" value="Зарегистрироваться" />
     </form>
 </section>
