@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Article } from '../data/data.service';
 
 @Component({
     selector: 'app-articlelist',
@@ -7,5 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ArticleListComponent {
     
-
+    articles : Article[] | undefined;
 }

@@ -1,0 +1,9 @@
+<section>
+    <p>Каталог фотографий</p>
+    <ul *ngFor="let photo of photos">
+        <li>
+            <p>{{photo}}</p>
+            <input class="button" type="submit" (click)="deletePhoto()" value="Удалить" />
+        </li>
+    </ul>
+</section>

@@ -1,27 +1,29 @@
 <section>
     <form action="/article/add" method="post">
         <label>Название статьи</label><br />
-        <input class="input" type="text" name="articlename"/><br /><br />
+        <input class="input" type="text" [(ngModel)]="articleName"/><br /><br />
         <label>Содержимое статьи</label><br />
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary" id="bold" (click)="makeBold()">Ж</button>
-            <button type="button" class="btn btn-primary" id="italic">К</button>
-            <button type="button" class="btn btn-primary" id="underline">Ч</button>
-            <button type="button" class="btn btn-primary" id="link"> </button>
-            <button type="button" class="btn btn-primary" id="picture"> </button>
+            <div [hidden]="!isCode">
+                <button type="button" class="btn btn-primary" id="bold" (click)="makeBold()">Ж</button>
+                <button type="button" class="btn btn-primary" id="italic" (click)="makeItalic()">К</button>
+                <button type="button" class="btn btn-primary" id="underline" (click)="makeUnderline()">Ч</button>
+                <button type="button" class="btn btn-primary" id="link" (click)="addLink()">.</button>
+                <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" class="btn btn-primary" style="display: none;" (change)="addPicture($event)" #fileInput>
+                <button type="button" class="btn btn-primary" id="picture" (click)="fileInput.click()">.</button>
+            </div>
             <br>
             <br>
             <button type="button" class="btn btn-primary" (click)="showCode()">Код</button>
             <button type="button" class="btn btn-primary" (click)="showView()">Вид</button>
         </div><br />
-        <div [hidden]="!isCode">
-            <textarea class="input" cols="60" rows="45" [(ngModel)]="articleText" id="articletext" name="articledata"></textarea><br /><br />
+        <div [hidden]="!isCode" id="articleCode">
+            <textarea class="input" cols="60" rows="45" [(ngModel)]="articleText" id="articleText" name="articleData"></textarea><br /><br />
         </div>
-        <div [hidden]="isCode">
-            <p>
-                {{articleText}}
+        <div [hidden]="isCode" >
+            <p id="articleView">
             </p>
         </div>
-        <input class="button" type="submit" value="Добавить статью" />
+        <input class="button" type="submit" (click)="addArticle()" value="Добавить статью" />
     </form>    
 </section>

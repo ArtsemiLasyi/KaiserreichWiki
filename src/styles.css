@@ -38,3 +38,14 @@ app-root {
 }
 
 
+
+p, label {
+    color: white;
+    font-family: 'Libre Baskerville', cursive;
+    padding: 0.5em;
+    font-size: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: white;
+}

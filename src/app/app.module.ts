@@ -19,15 +19,25 @@ import { ArticleComponent } from './article/article.component';
 import { ArticleAddComponent } from './articleadd/articleadd.component';
 import { ArticleListComponent } from './articlelist/articlelist.component';
 import { NotFoundComponent } from './notfound/notfound.component';
+import { ArticleInfoComponent } from './articleinfo/articleinfo.component';
+import { PhotoListComponent } from './photolist/photolist.component';
 
 
 const photoRoutes: Routes = [
-  { path: 'add', component: PhotoAddComponent}
+  { path: 'add', component: PhotoAddComponent},
+  { path: ':id', component: PhotoComponent },
+  { path: '', component: PhotoListComponent }
 ];
 
 const articleRoutes: Routes = [
   { path: 'add', component: ArticleAddComponent},
-  { path: '', component: ArticleListComponent}
+  { path: '', component: ArticleListComponent},
+  { path: ':id', component: ArticleInfoComponent}
+];
+
+const accountRoutes: Routes = [
+  { path: '', component: ArticleAddComponent},
+  { path: ':id', component: ArticleListComponent}
 ];
 
 const appRoutes: Routes =[

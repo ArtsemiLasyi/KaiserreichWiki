@@ -13,6 +13,17 @@ export class HttpService{
 
 export class Article {
 
+    name : string;
+
+    text : string;
+
+    //photos : Photo[];
+
+    constructor(name : string, text : string) {
+
+        this.name = name;
+        this.text = text;
+    }
 }
 
 export class Photo {
