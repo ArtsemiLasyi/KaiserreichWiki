@@ -1,20 +1,23 @@
 <section>
     <form action="/account" #accountForm="ngForm" method="post">
         <label>Email</label><br>
-        <input class="input" type="email" name="email" [(ngModel)]="account._email" #email="ngModel" required  pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"/><br>
+        <input class="input" type="email" name="email" [(ngModel)]="account.email" #email="ngModel" required  pattern="[a-zA-Z_0-9]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"/><br>
         <div [hidden]="!(email.invalid && (email.dirty || email.touched))" class="alert alert-danger">
-            Не указан email
+            Некорректный email
         </div>
         <label>Логин</label><br>
-        <input class="input" type="text" name="login" [(ngModel)]="account._login" #login="ngModel" required/><br>
+        <input class="input" type="text" name="login" [(ngModel)]="account.login" #login="ngModel" required/><br>
         <div [hidden]="!(login.invalid && (login.dirty || login.touched))" class="alert alert-danger">
             Не указано имя
         </div>
         <label>Пароль</label><br>
-        <input class="input" type="password" name="password" [(ngModel)]="account._password" minlength="8" #password="ngModel" required/><br>
+        <input class="input" type="password" name="password" [(ngModel)]="account.password" minlength="8" #password="ngModel" required/><br>
         <div [hidden]="!(password.invalid && (password.dirty || password.touched))" class="alert alert-danger">
             Пароль должен быть не менее 8 символов
         </div>
         <input class="button" type="submit" [disabled]="accountForm.invalid" (click)="submit()" value="Зарегистрироваться" />
+        <div [hidden]="!errorFlag" class="alert alert-danger">
+            {{errorMessage}}
+        </div>
     </form>
 </section>

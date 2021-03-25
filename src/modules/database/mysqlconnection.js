@@ -11,8 +11,8 @@ const pool = mysql.createPool({
   host: configElems[0],
   user: configElems[1],
   password: configElems[2], 
-  database: "TO-DO"
-});
+  database: configElems[3]
+}).promise();
 
 
-module.exports.mySqlConnectionPool = pool;
+module.exports.ConnectionPool = pool;

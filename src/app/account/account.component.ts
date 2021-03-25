@@ -11,12 +11,21 @@ export class AccountComponent {
     
     account: Account = new Account("", "", "");
 
-    done: boolean = false;
-
+    done : boolean = false;
+    errorFlag : boolean = false; 
+    errorMessage : string = "Error";
 
     constructor(private httpService: HttpService){}
-    submit(){
-        alert("a");
-        this.httpService.postData("/account", this.account);
+    submit() {
+        this.httpService.postData("http://localhost:1337/account", this.account).subscribe(
+            (data: any) => {
+                this.account = data; 
+                this.done = true;
+            },
+            error => {
+                this.errorFlag = true;
+                this.errorMessage = error.message.ToString();
+            }
+        );
     };
 }

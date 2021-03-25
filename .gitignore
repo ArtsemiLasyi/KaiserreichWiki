@@ -13,6 +13,9 @@
 # database configuration
 /database_config
 
+#jwt configuration
+/jwt_config
+
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
