@@ -13,7 +13,6 @@ import { HeaderComponent } from './header/header.component';
 import { GreetingComponent } from './greeting/greeting.component';
 import { AccountComponent } from './account/account.component';
 import { PhotoComponent } from './photo/photo.component';
-import { PhotoAddComponent } from './photoadd/photoadd.component';
 import { AdminComponent } from './admin/admin.component';
 import { ArticleComponent } from './article/article.component';
 import { ArticleAddComponent } from './articleadd/articleadd.component';
@@ -24,7 +23,6 @@ import { PhotoListComponent } from './photolist/photolist.component';
 
 
 const photoRoutes: Routes = [
-  { path: 'add', component: PhotoAddComponent},
   { path: ':id', component: PhotoComponent },
   { path: '', component: PhotoListComponent }
 ];
@@ -60,7 +58,6 @@ const appRoutes: Routes =[
     ArticleComponent,
     ArticleAddComponent,
     PhotoComponent,
-    PhotoAddComponent,
     AdminComponent
   ],
   imports: [

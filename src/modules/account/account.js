@@ -1,7 +1,7 @@
 const mySql = require("../database/mysqlconnection");
 
-const REQUEST_IS_EMAIL_ALREADY_EXIST = 'SELECT acc_id FROM account WHERE acc_email = ?'
-const REQUEST_INSERT_ACCOUNT = 'INSERT INTO account (acc_login, acc_email, acc_password_hash) VALUES (?,?,?)'
+const REQUEST_IS_EMAIL_ALREADY_EXIST = 'SELECT acc_id FROM account WHERE acc_email = ?';
+const REQUEST_INSERT_ACCOUNT = 'INSERT INTO account (acc_login, acc_email, acc_password_hash) VALUES (?,?,?)';
 const REQUEST_GET_ACCOUNT_BY_EMAIL = 'SELECT acc_id, acc_login, acc_password_hash FROM account WHERE acc_email = ?';
 const REQUEST_UPDATE_ACCOUNT = 'UPDATE account SET acc_login = ? WHERE acc_id = ?';
 const REQUEST_DELETE_ACCOUNT = 'DELETE FROM account WHERE acc_id = ?';

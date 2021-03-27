@@ -1,9 +1,22 @@
 <section>
+    <form action="/photo/add" method="post" enctype="multipart/form-data">
+        <label>Название</label><br>
+        <input class="input" type="text" name="fileName"><br>
+        <label>Файл</label><br>
+        <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" style="display: none;" (change)="loadPhoto($event)" #fileInput>
+        <button type="button" class="button" (click)="fileInput.click()">{{fileName}}</button><br><br>
+        <button type="button" class="button" (click)="addPhoto()">Добавить</button>
+    </form>
+</section>
+<section>
     <p>Каталог фотографий</p>
     <ul *ngFor="let photo of photos">
         <li>
-            <p>{{photo}}</p>
-            <input class="button" type="submit" (click)="deletePhoto()" value="Удалить" />
+            <p>{{photo.name}}</p>
+            <img [src]="photo.path" class="rounded float-left" alt="...">
+            <p>{{photo.datetimeUpload}}</p>
+            <button type="button" class="btn btn-primary" (click)="editPhoto()" value="Изменить"></button>
+            <button type="button" class="btn btn-primary" (click)="deletePhoto()" value="Удалить"></button>
         </li>
     </ul>
 </section>

@@ -28,7 +28,11 @@ export class Article {
 }
 
 export class Photo {
-    
+
+    id : number = 0;
+    name : string = "";
+    path : string = "";
+    datetimeUpload : Date | undefined;
 }
 
 export class Account {
