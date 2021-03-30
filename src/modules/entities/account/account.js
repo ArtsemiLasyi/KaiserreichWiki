@@ -1,4 +1,4 @@
-const mySql = require("../database/mysqlconnection");
+const mySql = require("../../database/mysqlconnection");
 
 const REQUEST_IS_EMAIL_ALREADY_EXIST = 'SELECT acc_id FROM account WHERE acc_email = ?';
 const REQUEST_INSERT_ACCOUNT = 'INSERT INTO account (acc_login, acc_email, acc_password_hash) VALUES (?,?,?)';
@@ -52,15 +52,17 @@ async function createNewAccount(login, email, password) {
 
 async function getAccountByEmail(email) {
     try {
-        
+
         let sqlResult = await mySql.ConnectionPool.execute(REQUEST_GET_ACCOUNT_BY_EMAIL, [email])
         if (sqlResult[0].length === 0) {
             // To do
         }
         result =
         {
+            password: sqlResult[0][0]['acc_password_hash'],
             login: sqlResult[0][0]['acc_login'],
-            email: sqlResult[0][0]['acc_email']
+            email: sqlResult[0][0]['acc_email'],
+            id: sqlResult[0][0]['acc_id']
         }
         return result;
 
@@ -70,8 +72,8 @@ async function getAccountByEmail(email) {
     }
 }
 
-module.exports.isAccountAlreadyExist = isAccountAlreadyExist
-module.exports.createNewAccount = createNewAccount
-module.exports.getAccountByEmail = getAccountByEmail
-module.exports.updateAccount = updateAccount
-module.exports.deleteAccount = deleteAccount
+module.exports.isAccountAlreadyExist = isAccountAlreadyExist;
+module.exports.createNewAccount = createNewAccount;
+module.exports.getAccountByEmail = getAccountByEmail;
+module.exports.updateAccount = updateAccount;
+module.exports.deleteAccount = deleteAccount;

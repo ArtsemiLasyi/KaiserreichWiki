@@ -1,22 +1,25 @@
 <section>
-    <form action="/photo/add" method="post" enctype="multipart/form-data">
+    <form action="/photo/add" method="post" (submit)="addPhoto(postForm)" #postForm="ngForm" enctype="multipart/form-data">
         <label>Название</label><br>
-        <input class="input" type="text" name="fileName"><br>
+        <input class="input" type="text" name="fileName" [(ngModel)]="photoName" #name="ngModel"><br>
         <label>Файл</label><br>
         <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" style="display: none;" (change)="loadPhoto($event)" #fileInput>
         <button type="button" class="button" (click)="fileInput.click()">{{fileName}}</button><br><br>
-        <button type="button" class="button" (click)="addPhoto()">Добавить</button>
+        <input type="submit" class="button" value="Добавить"/>
+        <div [hidden]="!errorFlag" class="alert alert-danger">
+          Фото не выбрано
+      </div>
     </form>
 </section>
-<section>
+<section *ngIf="photos.length > 0">
     <p>Каталог фотографий</p>
     <ul *ngFor="let photo of photos">
         <li>
             <p>{{photo.name}}</p>
             <img [src]="photo.path" class="rounded float-left" alt="...">
             <p>{{photo.datetimeUpload}}</p>
-            <button type="button" class="btn btn-primary" (click)="editPhoto()" value="Изменить"></button>
-            <button type="button" class="btn btn-primary" (click)="deletePhoto()" value="Удалить"></button>
+            <button type="button" class="button" (click)="editPhoto()" value="Изменить">Изменить</button>
+            <button type="button" class="button" (click)="deletePhoto()" value="Удалить">Удалить</button>
         </li>
     </ul>
 </section>

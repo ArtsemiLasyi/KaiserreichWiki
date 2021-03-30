@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Photo, HttpService } from '../data/data.service';
 
 @Component({
@@ -8,8 +9,8 @@ import { Photo, HttpService } from '../data/data.service';
     providers: [HttpService]
 })
 export class PhotoListComponent {
-    
-    photos : Photo[] | undefined;
+
+    photos : Photo[] = [];
 
     selectedFile : any;
 
@@ -17,10 +18,20 @@ export class PhotoListComponent {
 
     fileName : string = this.defaultFileName;
 
+    photoName : string = "";
+
+    errorFlag = false;
 
     constructor (private httpService: HttpService) {
 
     }
+
+    /*
+    ngOnInit(){
+
+        this.getPhotos();
+    }
+    */
 
     deletePhoto() {
         alert("To do");
@@ -30,6 +41,26 @@ export class PhotoListComponent {
         alert("To do");
     }
 
+    addPhoto(form : NgForm) {
+        if (!this.selectedFile) {
+          this.errorFlag = true;
+          return;
+        } else {
+          this.errorFlag = false;
+        }
+        const photo = new Photo();
+        photo.datetimeUpload = new Date();
+        photo.path = this.fileName;
+        photo.name = form.value.fileName;
+        this.photos.push(photo);
+    }
+
+    loadPhoto(event : any) : any {
+        this.selectedFile = event.target.files[0];
+        this.fileName = this.selectedFile?.name || "Добавить фото";
+    }
+
+    /*
     addPhoto() {
 
         let photo = new Photo();
@@ -41,12 +72,12 @@ export class PhotoListComponent {
         this.httpService.postData("http://localhost:1337/account", uploadData).subscribe();
     }
 
-    loadPhoto(event : any) : any {
-        this.selectedFile = event.target.files[0];
-        this.fileName = this.selectedFile?.name;
-    }
 
-    getPhoto() {
-        alert("To do");
+
+    getPhotos() {
+        this.httpService.getData("http://localhost:1337/photo").subscribe(
+            (data : any) => this.photos = data
+        );
     }
+    */
 }

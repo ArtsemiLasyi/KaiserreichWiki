@@ -11,7 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HeaderComponent } from './header/header.component';
 import { GreetingComponent } from './greeting/greeting.component';
-import { AccountComponent } from './account/account.component';
+import { AccountRegistrationComponent } from './accountregistration/accountregistration.component';
 import { PhotoComponent } from './photo/photo.component';
 import { AdminComponent } from './admin/admin.component';
 import { ArticleComponent } from './article/article.component';
@@ -20,6 +20,8 @@ import { ArticleListComponent } from './articlelist/articlelist.component';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { ArticleInfoComponent } from './articleinfo/articleinfo.component';
 import { PhotoListComponent } from './photolist/photolist.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AccountLoginComponent } from './accountlogin/accountlogin.component';
 
 
 const photoRoutes: Routes = [
@@ -40,7 +42,8 @@ const accountRoutes: Routes = [
 
 const appRoutes: Routes =[
   { path: '', component : GreetingComponent },
-  { path: 'account', component : AccountComponent },
+  { path: 'account/registration', component : AccountRegistrationComponent },
+  { path: 'account/login', component: AccountLoginComponent},
   { path: 'article', component : ArticleComponent, children: articleRoutes },
   { path: 'photo', component: PhotoComponent, children: photoRoutes },
   { path: 'admin', component: AdminComponent },
@@ -54,18 +57,21 @@ const appRoutes: Routes =[
     NavigationComponent,
     HeaderComponent,
     FooterComponent,
-    AccountComponent,
+    AccountRegistrationComponent,
+    AccountLoginComponent,
     ArticleComponent,
     ArticleAddComponent,
     PhotoComponent,
-    AdminComponent
+    AdminComponent,
+    PhotoListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
