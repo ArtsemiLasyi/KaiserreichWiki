@@ -5,10 +5,13 @@ const jwt = require('jsonwebtoken');
 const { onErrorResumeNext } = require('rxjs');
 const account = require("../../entities/account/account");
 const config = require('config');
+const bcrypt = require('bcryptjs');
 
 const router = Router();
 
 const jsonParser = express.json();
+
+const SALT_LENGTH = 12;
 
 router.post("/registration",
   [
@@ -22,7 +25,7 @@ router.post("/registration",
       return response.status(400).json({message : "Empty body"});
     }
 
-    const errors = validationResult(request);
+    const errors = validationResult(request.body);
 
     if (!errors.isEmpty()) {
       return response.status(400).json({
@@ -38,7 +41,7 @@ router.post("/registration",
       return response.status(400).json({message: "Account with this email is already exists!"})
     }
 
-    const hashedPassword = await bcrypt.hash(password, SALT_LENGTH)
+    const hashedPassword = await bcrypt.hash(password, SALT_LENGTH);
     const accountId = await account.createNewAccount(login, email, hashedPassword);
 
     const token = jwt.sign(
@@ -47,7 +50,7 @@ router.post("/registration",
       {expiresIn: '1h'}
   )
 
-    response.status(201).json({userId: getAccount, message : "Account created successfully!"});
+    response.status(201).cookie("SESSIONID", token, {httpOnly:true, secure:true});
   } catch (ex) {
     response.status(500).json({message : "Server error!"});
   }
@@ -66,7 +69,7 @@ router.post("/login",
       return response.status(400).json({message : "Empty body"});
     }
 
-    const errors = validationResult(request);
+    const errors = validationResult(request.body);
 
     if (!errors.isEmpty()) {
       return response.status(400).json({
@@ -89,7 +92,7 @@ router.post("/login",
       { expiresIn: "2h" }
     )
 
-    response.json({ token, userId: posAccount.id });
+    response.json({ "token" : token, userId: posAccount.id });
 
   } catch (ex) {
     response.status(500).json({message : "Server error!"});

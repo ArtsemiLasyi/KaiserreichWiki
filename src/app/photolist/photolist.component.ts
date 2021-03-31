@@ -12,7 +12,9 @@ export class PhotoListComponent {
 
     photos : Photo[] = [];
 
-    selectedFile : any;
+    uploadsPath = "assets/uploads/";
+
+    selectedFile : File | undefined;
 
     private defaultFileName : string = "Добавить фото";
 
@@ -26,19 +28,25 @@ export class PhotoListComponent {
 
     }
 
-    /*
     ngOnInit(){
 
         this.getPhotos();
     }
-    */
 
-    deletePhoto() {
+    deletePhoto(id : number) {
         alert("To do");
     }
 
-    editPhoto() {
-        alert("To do");
+    editPhoto(id : number) {
+
+    }
+
+    getPhotos() {
+      this.httpService.getData("http://localhost:1337/photo").subscribe(
+          (data : any) => {
+            this.photos = data.photos;
+          }
+      );
     }
 
     addPhoto(form : NgForm) {
@@ -48,11 +56,13 @@ export class PhotoListComponent {
         } else {
           this.errorFlag = false;
         }
-        const photo = new Photo();
-        photo.datetimeUpload = new Date();
-        photo.path = this.fileName;
-        photo.name = form.value.fileName;
-        this.photos.push(photo);
+
+        const formData = new FormData();
+        formData.append("path", this.fileName);
+        formData.append("name", form.value.fileName);
+        formData.append("file", this.selectedFile, this.selectedFile.name);
+        this.httpService.postData("http://localhost:1337/photo", formData).subscribe();
+        this.getPhotos();
     }
 
     loadPhoto(event : any) : any {
@@ -74,10 +84,7 @@ export class PhotoListComponent {
 
 
 
-    getPhotos() {
-        this.httpService.getData("http://localhost:1337/photo").subscribe(
-            (data : any) => this.photos = data
-        );
+
     }
     */
 }

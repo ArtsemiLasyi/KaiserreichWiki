@@ -46,6 +46,7 @@ export class Photo {
     name : string = "";
     path : string = "";
     datetimeUpload : Date | undefined;
+    file : File | undefined;
 }
 
 export class Account {

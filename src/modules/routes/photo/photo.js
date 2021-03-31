@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const account = require("../../entities/photo/photo");
+const photo = require("../../entities/photo/photo");
 const express = require('express');
 const {check, validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -11,9 +11,11 @@ const router = Router();
 
 const jsonParser = express.json();
 
-const UPLOADS_DIRECTORY = "uploads";
+const UPLOADS_DIRECTORY = "assets/uploads";
 
 const bodyParser = require("body-parser");
+
+const titleFileDest = process.cwd() + "/dist/KaiserreichWiki/" + "index.html";
 
 const storageConfig = multer.diskStorage({
   destination: (request, file, cb) => {
@@ -36,19 +38,17 @@ const fileFilter = (request, file, cb) => {
   }
 }
 
-router.use(multer({ storage: storageConfig, fileFilter: fileFilter }).single("filedata"));
+router.use(multer({ storage: storageConfig, fileFilter: fileFilter }).single("file"));
 
-
-
-router.get("/", jsonParser, async function(request, response) {
-
+router.get("/",async function (request, response) {
+  let photos = [];
   try {
-      const data = await photo.getPhotos();
-      response.sendStatus(200).json(data);
-  } catch(ex) {
-      response.sendStatus(501).json({message: "Server error"});
+    photos = await photo.getPhotos();
   }
-})
+  finally {
+    response.json({photos: photos});
+  }
+});
 
 router.post("/", jsonParser, async function(request, response) {
 
@@ -58,14 +58,8 @@ router.post("/", jsonParser, async function(request, response) {
           response.sendStatus(400).json({message : "Empty body"});
       }
 
-      let filedata = request.file;
-      if (!filedata)
-        response.send("");
-      else
-        response.send("Файл загружен");
-
-      const {name, path} = request.body.data;
-      const datetime = Date.now();
+      const {name, path} = request.body;
+      const datetime = Date.now().toString();
       await photo.createPhoto(name, path, datetime);
       response.sendStatus(201).json();
 

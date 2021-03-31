@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Account, HttpService } from '../data/data.service';
 
 @Component({
@@ -15,16 +16,16 @@ export class AccountLoginComponent {
     errorFlag : boolean = false;
     errorMessage : string = "Error";
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService, private router : Router){}
     submit() {
         this.httpService.postData("http://localhost:1337/account/login", this.account).subscribe(
-            (data: any) => {
-                this.account = data;
+            () => {
                 this.done = true;
+                this.router.navigate([""]);
             },
             error => {
                 this.errorFlag = true;
-                this.errorMessage = error.message.ToString();
+                this.errorMessage = "Неверный email или пароль!";
             }
         );
     };

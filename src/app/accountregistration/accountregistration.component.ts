@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Account, HttpService } from '../data/data.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-accountregistration',
@@ -15,17 +16,18 @@ export class AccountRegistrationComponent {
     errorFlag : boolean = false;
     errorMessage : string = "Error";
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService, private router : Router){}
+
     submit() {
-        this.httpService.postData("http://localhost:1337/account/registation", this.account).subscribe(
-            (data: any) => {
-                this.account = data;
-                this.done = true;
-            },
-            error => {
-                this.errorFlag = true;
-                this.errorMessage = error.message.ToString();
-            }
+        this.httpService.postData("http://localhost:1337/account/registration", this.account).subscribe(
+          () => {
+            console.log("User is logged in");
+            this.router.navigate([""]);
+          },
+          (error : any) => {
+            this.errorFlag = true;
+            this.errorMessage = "Ошибка при регистрации";
+          }
         );
     };
 }
