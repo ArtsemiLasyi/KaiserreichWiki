@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Photo, HttpService } from '../data/data.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
     selector: 'app-articlelist',
@@ -24,67 +25,70 @@ export class PhotoListComponent {
 
     errorFlag = false;
 
-    constructor (private httpService: HttpService) {
+    editModeFlag = false;   // Flag which shows if edit mode is enabled
+    editedPhoto : any;        // Photo to edit
+
+    constructor (private httpService: HttpService,
+                 private router : Router,
+                 private route : ActivatedRoute) {
 
     }
 
     ngOnInit(){
 
-        this.getPhotos();
+      this.getPhotos();
     }
 
     deletePhoto(id : number) {
-        alert("To do");
-    }
+      this.httpService.deleteData("http://localhost:1337/photo/" + id, id).subscribe();
+      this.router.navigate(['/photo'], { relativeTo: this.route });
+    };
 
-    editPhoto(id : number) {
-
+    editPhoto(photo : Photo) {
+      this.editModeFlag = true;
+      this.editedPhoto = photo;
+      this.fileName = photo.path;
+      this.photoName = photo.name;
     }
 
     getPhotos() {
       this.httpService.getData("http://localhost:1337/photo").subscribe(
-          (data : any) => {
-            this.photos = data.photos;
-          }
+        (data : any) => {
+          this.photos = data.photos;
+        }
       );
     }
 
-    addPhoto(form : NgForm) {
-        if (!this.selectedFile) {
-          this.errorFlag = true;
-          return;
-        } else {
-          this.errorFlag = false;
-        }
+    sendPhoto(form : NgForm) {
+      if (!this.editModeFlag && !this.selectedFile) {
+        this.errorFlag = true;
+        return;
+      } else {
+        this.errorFlag = false;
+      }
 
-        const formData = new FormData();
-        formData.append("path", this.fileName);
-        formData.append("name", form.value.fileName);
-        formData.append("file", this.selectedFile, this.selectedFile.name);
+      const formData = new FormData();
+      formData.append("path", this.fileName);
+      formData.append("name", form.value.photoName);
+      if (!this.editModeFlag) {
+        formData.append("file", this.selectedFile!, this.selectedFile!.name);
         this.httpService.postData("http://localhost:1337/photo", formData).subscribe();
-        this.getPhotos();
+      } else {
+        this.httpService.updatedata("http://localhost:1337/photo/" + this.editedPhoto.id, formData).subscribe();
+        this.editModeFlag = false;
+      }
+      this.router.navigate(['/photo'], { relativeTo: this.route });
+    }
+
+    cancelEdit() {
+      this.fileName = "Добавить фото";
+      this.editModeFlag = false;
     }
 
     loadPhoto(event : any) : any {
-        this.selectedFile = event.target.files[0];
-        this.fileName = this.selectedFile?.name || "Добавить фото";
-    }
-
-    /*
-    addPhoto() {
-
-        let photo = new Photo();
-        photo.datetimeUpload = new Date();
-        photo.path = this.fileName;
-
-        const uploadData = new FormData();
-        uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
-        this.httpService.postData("http://localhost:1337/account", uploadData).subscribe();
+      this.selectedFile = event.target.files[0];
+      this.fileName = this.selectedFile?.name || "Добавить фото";
     }
 
 
-
-
-    }
-    */
 }

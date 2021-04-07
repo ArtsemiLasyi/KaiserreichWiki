@@ -4,7 +4,9 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class HttpService{
 
-    constructor(private http: HttpClient){ }
+    constructor(private http: HttpClient){
+
+    }
 
     postData(path : string, data : any) {
         const body = data;
@@ -14,14 +16,13 @@ export class HttpService{
     getData(path : string) {
         return this.http.get(path);
     }
-}
 
-@Injectable()
-export class PhotoService {
-    private photos : Photo[] = [];
+    deleteData(path : string, data : any) {
+        return this.http.delete(path, data);
+    }
 
-    getPhotos() : any {
-        return [...this.photos];
+    updatedata(path : string, data : any) {
+        return this.http.put(path, data);
     }
 }
 

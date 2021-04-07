@@ -1,14 +1,15 @@
 <section>
-    <form action="/photo/add" method="post" (submit)="addPhoto(postForm)" #postForm="ngForm" enctype="multipart/form-data">
+    <form action="/photo/add" method="post" (submit)="sendPhoto(postForm)" #postForm="ngForm" enctype="multipart/form-data">
         <label>Название</label><br>
-        <input class="input" type="text" name="fileName" [(ngModel)]="photoName" #name="ngModel"><br>
+        <input class="input" type="text" name="photoName" [(ngModel)]="photoName" #name="ngModel"><br>
         <label>Файл</label><br>
         <input type="file" name="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" style="display: none;" (change)="loadPhoto($event)" #fileInput>
         <button type="button" class="button" (click)="fileInput.click()">{{fileName}}</button><br><br>
         <input type="submit" class="button" value="Добавить"/>
+        <button type="button" class="button" [hidden]="!editModeFlag" (click)="cancelEdit()">Отмена</button>
         <div [hidden]="!errorFlag" class="alert alert-danger">
           Фото не выбрано
-      </div>
+        </div>
     </form>
 </section>
 <section *ngIf="photos.length > 0">
@@ -16,9 +17,9 @@
     <ul *ngFor="let photo of photos">
         <li>
             <p>{{photo.name}}</p>
-            <img [src]="uploadsPath + photo.path" class="rounded float-left" alt="...">
+            <img [src]="uploadsPath + photo.path" class="card-img-top">
             <p>{{photo.datetimeUpload | date}}</p>
-            <button type="button" class="button" (click)="editPhoto(photo.id)" value="Изменить">Изменить</button>
+            <button type="button" class="button" (click)="editPhoto(photo)" value="Изменить">Изменить</button>
             <button type="button" class="button" (click)="deletePhoto(photo.id)" value="Удалить">Удалить</button>
         </li>
     </ul>

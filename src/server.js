@@ -41,14 +41,6 @@ app.get("/admin", function (request, response) {
     response.sendStatus(403);
 });
 
-// app.get("/photos/all" function(r
-
-// app.get("/photos/create")
-
-// app.get("/article/all")
-
-// app.get("/article/create")
-
 app.get("/", function (request, response) {
   try {
       response.sendFile(titleFileDest);
